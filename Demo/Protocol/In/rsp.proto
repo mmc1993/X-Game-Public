@@ -1,0 +1,92 @@
+syntax = "proto3";
+
+package Protocol;
+
+import "share.proto";
+
+//  rsp pid: 1001, RspJoin, 连接后端
+message RspJoin {
+    int32 room_id = 1;                  //  房间ID
+    int32 user_id = 2;                  //  玩家ID
+    int32 main_id = 3;                  //  房主ID
+    int32 slot_id = 4;                  //  槽位ID
+    int32 map_id  = 5;                  //  地图ID
+    string room_name = 6;               //  房间名字
+    string user_name = 7;               //  玩家名字
+    repeated UserInfo other_users = 8;  //  其他玩家
+}
+
+//  rsp pid: 1011, RspName, 玩家改名
+message RspName {
+    int32  user_id   = 1;    //  玩家ID
+    string user_name = 2;    //  玩家名字
+}
+
+//  rsp pid: 1021, RspRoomMap, 更换地图
+message RspRoomMap {
+    int32 user_id = 1;  //  玩家ID
+    int32 slot_n = 2;   //  槽位数
+    int32 map_id = 3;   //  地图ID
+}
+
+//  rsp pid: 1031, RspEnterGameBeg, 准备进入游戏
+message RspEnterGameBeg {
+    int32 user_id = 1;
+}
+
+//  rsp pid: 1041, RspEnterGameEnd, 结束进入游戏
+message RspEnterGameEnd {
+    int32 srand_seed = 1;   //  随机数
+    int64 time_stanp = 2;   //  时间戳
+    string sgame_addr = 3;  //  游戏服IP
+    int32  sgame_port = 4;  //  游戏服端口
+}
+
+//  rsp pid: 1051, RspStartGame, 准备就绪
+message RspStartGame {
+    int32 time = 1;    //  主机时间
+}
+
+//  rsp pid: 1061, RspSetSlot, 切换槽位
+message RspSetSlot {
+    int32 user_id = 1;      //  玩家ID
+    int32 new_slot_id = 2;  //  新槽位ID
+    int32 old_slot_id = 3;  //  旧槽位ID
+}
+
+//  rsp pid: 1071, RspGetPort, 获取端口
+message RspGetPort {
+    int32 port = 1;         //  端口
+}
+
+//  rsp pid: 1081, RspSetTeam, 设置阵营
+message RspSetTeam {
+    int32 user_id = 1;       //  玩家ID
+    uint32 team_flags = 2;   //  阵营标识
+}
+
+
+//---后端推送协议---
+//  rsp pid: 2001, RspQuit, 玩家退出
+message RspQuit {
+    int32 user_id = 1;  //  玩家ID
+}
+
+//---战斗协议---
+//  rsp pid: 4001, RspFrameData, 帧数据
+message RspFrameData {
+    int32 frame = 1;    //  编号
+}
+
+
+
+//---特殊协议号---
+//  rsp pid: 0001, RspInit, 初始化
+message RspInit {
+    int32 token = 1;    //  token
+}
+
+//  rsp pid: 0021, RspError, 错误码
+message RspError {
+    int32 pid = 1;  //  出错的协议ID
+}

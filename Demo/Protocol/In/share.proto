@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package Protocol;
+
+//-- 基础类型
+//  向量3
+message vec3 {
+    int32 x = 1;
+    int32 y = 2;
+    int32 z = 3;
+}
+//--
+
+//  玩家信息
+message UserInfo {
+    int32 user_id = 1;  //  玩家ID
+    int32 slot_id = 2;  //  槽位ID
+    string name = 3;    //  名字
+}
